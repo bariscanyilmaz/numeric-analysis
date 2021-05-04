@@ -13,7 +13,7 @@ int main()
     //graph_method();
     //bisection_method();
     //regular_falsi_method();
-    newton_raphson_method();
+    //newton_raphson_method();
     return 0;
 }
 
@@ -302,6 +302,67 @@ void newton_raphson_method()
             printf("\n Root 1:%f",b);
         }else{
          a=b;   
+        }
+
+    } while (!is_finish&&derivative_result!=0);
+
+}
+
+
+void secant_method()
+{
+    bool is_finish = false, is_root_exist;
+    float arr_of_multipiliers[MAX], result = 0, derivative_result = 0, epsilon, a, b, c, real_root = 0;
+
+    int degree_of_equevelent, i, iterate_count = 0, is_real_root;
+    printf("Denklemin derecesini giriniz:");
+    scanf("%d", &degree_of_equevelent);
+    printf("\n");
+
+    for (i = 0; i <= degree_of_equevelent; i++)
+    {
+        printf("%d dereceli bilinmeyenin kat sayisini giriniz:", i);
+        scanf("%f", &arr_of_multipiliers[i]);
+        printf("\n");
+    }
+
+    printf("\n");
+    printf("Epsilon degeri giriniz:");
+    scanf("%f", &epsilon);
+    printf("\n");
+    printf("Kok araligi icin a degerini giriniz:");
+    scanf("%f", &a);
+    printf("\n");
+    printf("Kok araligi icin b degerini giriniz:");
+    scanf("%f", &b);
+
+    printf("\n Gercek kok degeri var mi?:(1/0)");
+    scanf("%d", &is_real_root);
+    if (is_real_root)
+    {
+        printf("\n Gercek kok degerini girniz:");
+        scanf("%f", &real_root);
+    }
+
+    do
+    {    
+        result=calculate_equevelent(b,degree_of_equevelent,arr_of_multipiliers);
+        c =b-result*(b-a)/calculate_equevelent(b,degree_of_equevelent,arr_of_multipiliers)-calculate_equevelent(a,degree_of_equevelent,arr_of_multipiliers);
+        
+        if (is_real_root && fabs(real_root-c)<epsilon)
+        {
+            is_finish=true;
+            printf("\nGercek Root:%f",real_root);
+            printf("\nRoot:%f",c);
+            
+        }else if(!is_real_root && fabs(c-b)<epsilon){
+            is_finish=true;
+            printf("\n Root 0:%f",a);
+            printf("\n Root 1:%f",b);
+            printf("\n Root :%f",c);
+        }else{
+         a=b;
+         b=c;   
         }
 
     } while (!is_finish&&derivative_result!=0);
