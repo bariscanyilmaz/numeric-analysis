@@ -7,6 +7,7 @@ void graph_method();
 void bisection_method();
 void regular_falsi_method();
 void newton_raphson_method();
+void secant_method();
 
 int main()
 {
@@ -14,6 +15,7 @@ int main()
     //bisection_method();
     //regular_falsi_method();
     //newton_raphson_method();
+    secant_method();
     return 0;
 }
 
@@ -284,35 +286,37 @@ void newton_raphson_method()
     }
 
     do
-    {    
+    {
         result = calculate_equevelent(a, degree_of_equevelent, arr_of_multipiliers);
-        derivative_result=derivative(a,degree_of_equevelent,arr_of_multipiliers);
-        
+        derivative_result = derivative(a, degree_of_equevelent, arr_of_multipiliers);
+
         //c=xn
         //b=xn+1;
-        b=a-(result/derivative_result);
-        if (is_real_root && fabs(real_root-c)<epsilon)
+        b = a - (result / derivative_result);
+        if (is_real_root && fabs(real_root - c) < epsilon)
         {
-            is_finish=true;
-            printf("\nGercek Root:%f",real_root);
-            printf("\nRoot:%f",c);
-        }else if(!is_real_root && fabs(b-a)<epsilon){
-            is_finish=true;
-            printf("\n Root 0:%f",a);
-            printf("\n Root 1:%f",b);
-        }else{
-         a=b;   
+            is_finish = true;
+            printf("\nGercek Root:%f", real_root);
+            printf("\nRoot:%f", c);
+        }
+        else if (!is_real_root && fabs(b - a) < epsilon)
+        {
+            is_finish = true;
+            printf("\n Root 0:%f", a);
+            printf("\n Root 1:%f", b);
+        }
+        else
+        {
+            a = b;
         }
 
-    } while (!is_finish&&derivative_result!=0);
-
+    } while (!is_finish && derivative_result != 0);
 }
-
 
 void secant_method()
 {
     bool is_finish = false, is_root_exist;
-    float arr_of_multipiliers[MAX], result = 0, derivative_result = 0, epsilon, a, b, c, real_root = 0;
+    float arr_of_multipiliers[MAX], result = 0, epsilon, a, b, c, real_root = 0;
 
     int degree_of_equevelent, i, iterate_count = 0, is_real_root;
     printf("Denklemin derecesini giriniz:");
@@ -345,26 +349,30 @@ void secant_method()
     }
 
     do
-    {    
-        result=calculate_equevelent(b,degree_of_equevelent,arr_of_multipiliers);
-        c =b-result*(b-a)/calculate_equevelent(b,degree_of_equevelent,arr_of_multipiliers)-calculate_equevelent(a,degree_of_equevelent,arr_of_multipiliers);
-        
-        if (is_real_root && fabs(real_root-c)<epsilon)
+    {
+        result = calculate_equevelent(b, degree_of_equevelent, arr_of_multipiliers);
+        c = b - result * (a - b) / (calculate_equevelent(a, degree_of_equevelent, arr_of_multipiliers) - result);
+
+        if (is_real_root && fabs(real_root - c) < epsilon)
         {
-            is_finish=true;
-            printf("\nGercek Root:%f",real_root);
-            printf("\nRoot:%f",c);
-            
-        }else if(!is_real_root && fabs(c-b)<epsilon){
-            is_finish=true;
-            printf("\n Root 0:%f",a);
-            printf("\n Root 1:%f",b);
-            printf("\n Root :%f",c);
-        }else{
-         a=b;
-         b=c;   
+            is_finish = true;
+            printf("\nGercek Root:%f", real_root);
+            printf("\nRoot:%f", c);
+        }
+        else if (!is_real_root && fabs(c - b) < epsilon)
+        {
+            is_finish = true;
+            printf("\n Root 0:%f", a);
+            printf("\n Root 1:%f", b);
+            printf("\n Root :%f", c);
+        }
+        else
+        {
+            a = b;
+            b = c;
         }
 
-    } while (!is_finish&&derivative_result!=0);
+    } while (!is_finish);
 
+    printf("Exit from secant");
 }
