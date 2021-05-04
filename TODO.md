@@ -2,11 +2,11 @@
 
 ### TODO 
 
-- [ ] Graph Method
-- [ ] Bisection Method
-- [ ] Regular Falsi Method
-- [ ] Newton Rapshon Method
-- [ ] Secant Method
+- [x] Graph Method
+- [x] Bisection Method
+- [x] Regular Falsi Method
+- [x] Newton Rapshon Method
+- [x] Secant Method
 - [ ] Inverse Matrix
 - [ ] Gauss Elimination
 - [ ] Gauss Siedal
