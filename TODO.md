@@ -7,10 +7,10 @@
 - [x] Regular Falsi Method
 - [x] Newton Rapshon Method
 - [x] Secant Method
-- [ ] Inverse Matrix
+- [x] Inverse of a Matrix
 - [ ] Gauss Elimination
 - [ ] Gauss Siedal
-- [ ] Derivative
+- [ ] Numeric Derivative (Central,Forward,Backward)
 - [ ] Simpson
 - [ ] Trapez
 - [ ] Gregory Newton Enterpolation without transition of variables
