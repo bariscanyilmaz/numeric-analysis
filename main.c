@@ -8,6 +8,11 @@ void bisection_method();
 void regular_falsi_method();
 void newton_raphson_method();
 void secant_method();
+void inverse_of_matrix();
+
+float determinant(float arr[][25], int n);
+void cofactor(float arr[][25], int n);
+void transpose(float arr[][25], float cof[][25], int n);
 
 int main()
 {
@@ -15,8 +20,145 @@ int main()
     //bisection_method();
     //regular_falsi_method();
     //newton_raphson_method();
-    secant_method();
+    //secant_method();
+
+    inverse_of_matrix();
     return 0;
+}
+
+void inverse_of_matrix()
+{
+    float arr[25][25];
+    int size, i, j;
+
+    printf("N x N matrisin boyutunu giriniz:");
+    scanf("%d", &size);
+
+    for (i = 0; i < size; i++)
+    {
+        for (j = 0; j < size; j++)
+        {
+            printf("%d .satir %d .sutun elemanı giriniz :", i, j);
+            scanf("%f", &arr[i][j]);
+            printf("\n");
+        }
+    }
+
+    float d = determinant(arr, size);
+
+    if (d == 0)
+    {
+        printf("Matrisin tersi bulunmamaktadır.");
+    }
+    else
+    {
+        cofactor(arr, size);
+
+        //
+    }
+}
+void cofactor(float arr[][25], int k)
+{
+
+    float b[25][25], fac[25][25];
+    int p, q, m, n, i, j;
+    for (q = 0; q < k; q++)
+    {
+        for (p = 0; p < k; p++)
+        {
+            m = 0;
+            n = 0;
+            for (i = 0; i < k; i++)
+            {
+                for (j = 0; j < k; j++)
+                {
+                    if (i != q && j != p)
+                    {
+                        b[m][n] = arr[i][j];
+                        if (n < (k - 2))
+                            n++;
+                        else
+                        {
+                            n = 0;
+                            m++;
+                        }
+                    }
+                }
+            }
+            fac[q][p] = pow(-1, q + p) * determinant(b, k - 1);
+        }
+    }
+
+    transpose(arr, fac, k);
+}
+
+float determinant(float arr[][25], int k)
+{
+    float s = 1, det = 0, tmp[25][25];
+    int i, j, m, n, c;
+    if (k == 1)
+    {
+        return (arr[0][0]);
+    }
+    else
+    {
+        det = 0;
+        for (c = 0; c < k; c++)
+        {
+            m = 0;
+            n = 0;
+            for (i = 0; i < k; i++)
+            {
+                for (j = 0; j < k; j++)
+                {
+                    tmp[i][j] = 0;
+                    if (i != 0 && j != c)
+                    {
+                        tmp[m][n] = arr[i][j];
+                        if (n < (k - 2))
+                            n++;
+                        else
+                        {
+                            n = 0;
+                            m++;
+                        }
+                    }
+                }
+            }
+            det += s * (arr[0][c] * determinant(tmp, k - 1));
+            s = -1 * s;
+        }
+    }
+
+    return det;
+}
+
+void transpose(float arr[][25], float cof[][25], int n)
+{
+
+    int i, j;
+    float d = determinant(arr, n), tmp = 0;
+
+    for (i = 0; i < n; i++)
+    {
+        for (j = 0; j < n; j++)
+        {
+            tmp = cof[i][j] / d;
+            cof[i][j] = cof[j][i] / d;
+            cof[j][i] = tmp;
+        }
+    }
+
+    printf("\nMatirisin Tersi:\n");
+
+    for (i = 0; i < n; i++)
+    {
+        for (j = 0; j < n; j++)
+        {
+            printf("\t%f ", cof[i][j]);
+        }
+        printf("\n");
+    }
 }
 
 float derivative(float x, int n, float arr[])
