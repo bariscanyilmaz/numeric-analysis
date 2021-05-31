@@ -11,6 +11,6 @@
 - [-] Gauss Elimination
 - [ ] Gauss Siedal
 - [x] Numeric Derivative (Central,Forward,Backward)
-- [ ] Simpson
+- [x] Simpson
 - [ ] Trapez
 - [ ] Gregory Newton Enterpolation without transition of variables

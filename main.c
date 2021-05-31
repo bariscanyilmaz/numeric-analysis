@@ -37,7 +37,7 @@ int main()
     //gauss_elimination_method();
 
     //numeric_derivative();
-    void simpson();
+    simpson();
 
     return 0;
 }
@@ -84,7 +84,7 @@ float integral(float x, int n, float arr[])
 
     for (j = 1; j <= n; j++)
     {
-        result += ((arr[j]) * (pow(x, j + 1))/(j+1));
+        result += ((arr[j]) * (pow(x, j + 1)) / (j + 1));
     }
 
     return result;
@@ -92,9 +92,9 @@ float integral(float x, int n, float arr[])
 
 void simpson()
 {
-    int n, i,steps,a,b;
-    float arr[max],h,result;
-    float k=0;
+    int n, i, steps;
+    float arr[max], h=0.0, result, a, b;
+    float k = 0;
     printf("Denklemin derecesini giriniz:");
     scanf("%d", &n);
     printf("\n");
@@ -105,41 +105,40 @@ void simpson()
         scanf("%f", &arr[i]);
         printf("\n");
     }
-    
+
     printf("A degeri giriniz:");
-    scanf("%d",&a);
-    
+    scanf("%f", &a);
+
     printf("\n");
-    
+
     printf("B degeri giriniz:");
-    scanf("%d",&b);
+    scanf("%f", &b);
     printf("\n");
 
     printf("Adim sayisini giriniz:");
-    scanf("%d",steps);
+    scanf("%d", &steps);
     printf("\n");
 
-    h=(a-b)/steps;
+    h = 1.0* (b-a)/steps;
 
-    result=calculate_equevelent(a,n,arr)+calculate_equevelent(b,n,arr);
+    result = calculate_equevelent(a, n, arr) + calculate_equevelent(b, n, arr);
 
-    for (i = 1; i <= steps-1; i++)
+    for (i = 1; i <= steps - 1; i++)
     {
-        k=a+i*h;
-        if (i%2==0)
+        k = a + i * h;
+        if (i % 2 == 0)
         {
-            result+=2*calculate_equevelent(k,n,arr);
-
-        }else{
-             result+=4*calculate_equevelent(k,n,arr);
+            result += 2 * calculate_equevelent(k, n, arr);
         }
-        
+        else
+        {
+            result += 4 * calculate_equevelent(k, n, arr);
+        }
     }
-    
-    result*=h/3;
-    printf("\n");
-    printf("Sonuc:%f",result);
 
+    result =result* (h / 3);
+    printf("\n");
+    printf("Sonuc:%f", result);
 }
 
 void gauss_seidel()
@@ -396,6 +395,7 @@ float calculate_equevelent(float x, int n, float arr[])
     int j;
     for (j = 0; j <= n; j++)
     {
+
         result += (arr[j]) * (pow(x, j));
     }
 
