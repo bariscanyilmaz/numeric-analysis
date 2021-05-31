@@ -23,7 +23,7 @@ void gauss_seidel();
 
 void numeric_derivative();
 void simpson();
-
+void trapez();
 int main()
 {
 
@@ -37,11 +37,56 @@ int main()
     //gauss_elimination_method();
 
     //numeric_derivative();
-    simpson();
+    //simpson();
+    trapez();
 
     return 0;
 }
+void trapez()
+{
+    int n, i, steps;
+    float arr[max], h = 0.0, result, a, b;
+    float k = 0;
+    printf("Denklemin derecesini giriniz:");
+    scanf("%d", &n);
+    printf("\n");
 
+    for (i = 0; i <= n; i++)
+    {
+        printf("%d dereceli bilinmeyenin kat sayisini giriniz:", i);
+        scanf("%f", &arr[i]);
+        printf("\n");
+    }
+
+    printf("A degeri giriniz:");
+    scanf("%f", &a);
+
+    printf("\n");
+
+    printf("B degeri giriniz:");
+    scanf("%f", &b);
+    printf("\n");
+
+    printf("Adim sayisini giriniz:");
+    scanf("%d", &steps);
+    printf("\n");
+
+    h = 1.0 * (b - a) / steps;
+
+    result = calculate_equevelent(a, n, arr) + calculate_equevelent(b, n, arr);
+
+    for (i = 1; i <= steps - 1; i++)
+    {
+        k = a + i * h;
+        
+        result += 2 * calculate_equevelent(k, n, arr);
+
+    }
+
+    result = result * (h / 2);
+    printf("\n");
+    printf("Sonuc:%f", result);
+}
 void numeric_derivative()
 {
     int n, i;
@@ -93,7 +138,7 @@ float integral(float x, int n, float arr[])
 void simpson()
 {
     int n, i, steps;
-    float arr[max], h=0.0, result, a, b;
+    float arr[max], h = 0.0, result, a, b;
     float k = 0;
     printf("Denklemin derecesini giriniz:");
     scanf("%d", &n);
@@ -119,7 +164,7 @@ void simpson()
     scanf("%d", &steps);
     printf("\n");
 
-    h = 1.0* (b-a)/steps;
+    h = 1.0 * (b - a) / steps;
 
     result = calculate_equevelent(a, n, arr) + calculate_equevelent(b, n, arr);
 
@@ -136,7 +181,7 @@ void simpson()
         }
     }
 
-    result =result* (h / 3);
+    result = result * (h / 3);
     printf("\n");
     printf("Sonuc:%f", result);
 }

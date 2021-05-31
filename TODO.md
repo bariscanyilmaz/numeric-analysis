@@ -12,5 +12,5 @@
 - [ ] Gauss Siedal
 - [x] Numeric Derivative (Central,Forward,Backward)
 - [x] Simpson
-- [ ] Trapez
+- [x] Trapez
 - [ ] Gregory Newton Enterpolation without transition of variables
