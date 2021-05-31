@@ -1,8 +1,12 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <math.h>
+#define max 50
 
 #define MAX 100
+
+float calculate_equevelent(float x, int n, float arr[]);
+
 void graph_method();
 void bisection_method();
 void regular_falsi_method();
@@ -14,16 +18,227 @@ float determinant(float arr[][25], int n);
 void cofactor(float arr[][25], int n);
 void transpose(float arr[][25], float cof[][25], int n);
 
+void gauss_elimination_method();
+void gauss_seidel();
+
+void numeric_derivative();
+void simpson();
+
 int main()
 {
+
     //graph_method();
     //bisection_method();
     //regular_falsi_method();
     //newton_raphson_method();
     //secant_method();
+    //inverse_of_matrix();
 
-    inverse_of_matrix();
+    //gauss_elimination_method();
+
+    //numeric_derivative();
+    void simpson();
+
     return 0;
+}
+
+void numeric_derivative()
+{
+    int n, i;
+    float arr[max];
+    float h, merkezi, ileri, geri, x;
+
+    printf("Denklemin derecesini giriniz:");
+    scanf("%d", &n);
+    printf("\n");
+
+    for (i = 0; i <= n; i++)
+    {
+        printf("%d dereceli bilinmeyenin kat sayisini giriniz:", i);
+        scanf("%f", &arr[i]);
+        printf("\n");
+    }
+    printf("X degerini giriniz:");
+    scanf("%f", &x);
+    printf("\n");
+    //merkezi,ileri,geri
+    printf("Fark degerini giriniz:");
+    scanf("%f", &h);
+
+    ileri = (calculate_equevelent((x + h), n, arr) - calculate_equevelent(x, n, arr)) / h;
+    geri = (calculate_equevelent((x), n, arr) - calculate_equevelent(x - h, n, arr)) / h;
+    merkezi = (calculate_equevelent((x + h), n, arr) - calculate_equevelent(x - h, n, arr)) / 2 * h;
+
+    printf("\n");
+    printf("Merkezi Fark:%f", merkezi);
+    printf("\n");
+    printf("Ileri Fark:%f", ileri);
+    printf("\n");
+    printf("Geri Fark:%f", geri);
+}
+
+float integral(float x, int n, float arr[])
+{
+    float result = 0;
+    int j;
+
+    for (j = 1; j <= n; j++)
+    {
+        result += ((arr[j]) * (pow(x, j + 1))/(j+1));
+    }
+
+    return result;
+}
+
+void simpson()
+{
+    int n, i,steps,a,b;
+    float arr[max],h,result;
+    float k=0;
+    printf("Denklemin derecesini giriniz:");
+    scanf("%d", &n);
+    printf("\n");
+
+    for (i = 0; i <= n; i++)
+    {
+        printf("%d dereceli bilinmeyenin kat sayisini giriniz:", i);
+        scanf("%f", &arr[i]);
+        printf("\n");
+    }
+    
+    printf("A degeri giriniz:");
+    scanf("%d",&a);
+    
+    printf("\n");
+    
+    printf("B degeri giriniz:");
+    scanf("%d",&b);
+    printf("\n");
+
+    printf("Adim sayisini giriniz:");
+    scanf("%d",steps);
+    printf("\n");
+
+    h=(a-b)/steps;
+
+    result=calculate_equevelent(a,n,arr)+calculate_equevelent(b,n,arr);
+
+    for (i = 1; i <= steps-1; i++)
+    {
+        k=a+i*h;
+        if (i%2==0)
+        {
+            result+=2*calculate_equevelent(k,n,arr);
+
+        }else{
+             result+=4*calculate_equevelent(k,n,arr);
+        }
+        
+    }
+    
+    result*=h/3;
+    printf("\n");
+    printf("Sonuc:%f",result);
+
+}
+
+void gauss_seidel()
+{
+}
+
+void gauss_jordan_method() //find inverse of matrix
+{
+    float arr[max][max] = {0};
+    float x[max][max] = {0};
+    int n, i, j, k, row;
+
+    printf("Bilinmeyen Sayisini giriniz:");
+    scanf("%d", &n);
+    printf("\n");
+
+    for (i = 0; i < n; i++)
+    {
+        for (j = 0; j < n; j++)
+        {
+            printf("%d. Satir %d. Sutun Elemani Giriniz:", i, j);
+            scanf("%f", &arr[i][j]);
+            printf("\n");
+
+            if (i == j)
+            {
+                x[i][j] = 1;
+            }
+        }
+    }
+
+    //
+    for (i = 0; i < n; i++)
+    {
+        float ratio = arr[i][i];
+        for (j = 0; j < n; j++)
+        {
+            /* code */
+            arr[i][j] /= ratio;
+            x[i][j] /= ratio;
+        }
+    }
+
+    //
+}
+
+void gauss_elimination_method()
+{
+    float arr[max][max] = {0};
+    float x[max][1] = {0};
+    int n, i, j, k, row;
+
+    printf("Bilinmeyen Sayisini giriniz:");
+    scanf("%d", &n);
+    printf("\n");
+
+    for (i = 0; i < n; i++)
+    {
+        for (j = 0; j < n; j++)
+        {
+            printf("%d. Satir %d. Sutun Elemani Giriniz:", i, j);
+            scanf("%f", &arr[i][j]);
+            printf("\n");
+        }
+
+        printf("%d .Denklemin Cevabini giriniz: ", i);
+        scanf("%f", &x[i][0]);
+    }
+
+    for (i = 0; i < n - 1; i++)
+    {
+        for (j = 0; j < n; j++)
+        {
+
+            arr[i][j] /= arr[i][i]; //make a11 1
+            x[i][0] /= arr[i][i];
+
+            // for ( k = i; k < n; k++)
+            // {
+            //     // arr[j][k]-=(ratio*arr[i][k]);
+            //     // x[j]-=(ratio*x[i]);
+            // }
+
+            for (row = i + 1; row < n; row++)
+            {
+                /* code */
+                for (k = 0; k < n; k++)
+                {
+                    arr[row][k] -= (arr[row][k] * arr[i][k]);
+                }
+            }
+        }
+    }
+
+    for (i = 0; i < n; i++)
+    {
+        printf("%f", x[i][0]);
+        printf("\n");
+    }
 }
 
 void inverse_of_matrix()
