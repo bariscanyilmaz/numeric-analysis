@@ -9,7 +9,7 @@
 - [x] Secant Method
 - [x] Inverse of a Matrix
 - [x] Gauss Elimination
-- [ ] Gauss Siedal
+- [x] Gauss Siedal
 - [x] Numeric Derivative (Central,Forward,Backward)
 - [x] Simpson
 - [x] Trapez

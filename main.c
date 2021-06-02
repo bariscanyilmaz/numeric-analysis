@@ -19,11 +19,12 @@ void cofactor(float arr[][25], int n);
 void transpose(float arr[][25], float cof[][25], int n);
 
 void gauss_elimination_method();
-void gauss_seidel();
+void gauss_siedal();
 
 void numeric_derivative();
 void simpson();
 void trapez();
+
 int main()
 {
 
@@ -34,7 +35,8 @@ int main()
     //secant_method();
     //inverse_of_matrix();
 
-    gauss_elimination_method();
+    //gauss_elimination_method();
+    gauss_siedal();
 
     //numeric_derivative();
     //simpson();
@@ -185,8 +187,106 @@ void simpson()
     printf("Sonuc:%f", result);
 }
 
-void gauss_seidel()
+void gauss_siedal()
 {
+    float arr[max][max + 1] = {0};
+    float x[max] = {0}, b[max] = {0}, xn[max] = {0}, c = 0, total = 0, epsilon = 0, init = 0, tmp = 0, error = 0;
+    int n, i, j, k, row;
+
+    /*
+
+    _ _ _
+    _ _ _
+    _ _ _
+    
+    
+    */
+
+
+    printf("Bilinmeyen Sayisini giriniz:");
+    scanf("%d", &n);
+    printf("\n");
+
+    printf("Epsilon degerini giriniz:");
+    scanf("%f", &epsilon);
+    printf("\n");
+
+    printf("Baslangic degerini giriniz:");
+    scanf("%f", &init);
+    printf("\n");
+
+    printf("Denklemleri girerken lutfen diagonellerinin carpimi maksimum olacak sirada giriniz!");
+    printf("\n");
+
+    for (i = 0; i < n; i++)
+    {
+        for (j = 0; j <= n; j++)
+        {
+            if (j == n)
+            {
+
+                printf("%d. denklemin Cevabini giriniz:", i + 1);
+                scanf("%f", &b[i]);
+                printf("\n");
+            }
+            else
+            {
+                printf("A[%d][%d]  Elemani Giriniz:", i + 1, j + 1);
+                scanf("%f", &arr[i][j]);
+                printf("\n");
+            }
+        }
+    }
+
+    for (i = 0; i < n; i++)
+    {
+        x[i] = init;
+    }
+
+    do
+    {
+        for (i = 0; i < n; i++)
+        {
+            total = b[i];
+            for (j = 0; j < n; j++)
+            {
+                if (j != i){
+                    total -= arr[i][j] * x[j];
+                }                
+            }
+            
+            xn[i]=total/arr[i][i];
+
+        }
+        c = 0; // indicates |x[i]-xn[i]|<epp for all i
+        for (i = 0; i < n; i++)
+        {
+            error = fabs(x[i] - xn[i]);
+            if (error > epsilon)
+            {
+                c = 1;
+            }
+        }
+
+        if (c == 1)
+        {
+            for (i = 0; i < n; i++)
+            {
+                x[i] = xn[i];
+            }
+        }
+
+    } while (c == 1);
+
+    printf("Cevaplar \n\n");
+
+    for (i = 0; i < n; i++)
+    {
+        printf("\nX[%d]:%f", i, xn[i]);
+    }
+
+    printf("\n");
+
 }
 
 void gauss_jordan_method() //find inverse of matrix
@@ -232,7 +332,7 @@ void gauss_jordan_method() //find inverse of matrix
 void gauss_elimination_method()
 {
     float arr[max][max + 1] = {0};
-    float x[max] = {0},c=0,total=0;
+    float x[max] = {0}, c = 0, total = 0;
     int n, i, j, k, row;
 
     printf("Bilinmeyen Sayisini giriniz:");
@@ -246,55 +346,51 @@ void gauss_elimination_method()
             if (j == n)
             {
 
-              printf("%d. denklemin Cevabini giriniz:",i+1);
-              scanf("%f",&arr[i][j]);  
-              printf("\n");
-
+                printf("%d. denklemin Cevabini giriniz:", i + 1);
+                scanf("%f", &arr[i][j]);
+                printf("\n");
             }
             else
             {
-                printf("A[%d][%d]  Elemani Giriniz:", i+1, j+1);
+                printf("A[%d][%d]  Elemani Giriniz:", i + 1, j + 1);
                 scanf("%f", &arr[i][j]);
                 printf("\n");
             }
         }
-
     }
 
     for (j = 0; j < n; j++)
     {
         for (i = 0; i < n; i++)
         {
-            if (i>j)
+            if (i > j)
             {
-                /* code */
-                c=arr[i][j]/arr[j][j];
-                for ( k = 0; k <= n; k++)
+                c = arr[i][j] / arr[j][j];
+                for (k = 0; k <= n; k++)
                 {
-                    arr[i][k]=arr[i][k]-c*arr[j][k];
+                    arr[i][k] = arr[i][k] - c * arr[j][k];
                 }
             }
         }
     }
 
-    x[n-1]=(arr[n-1][n])/(arr[n-1][n-1]);
+    x[n - 1] = (arr[n - 1][n]) / (arr[n - 1][n - 1]);
 
-    for ( i = n-1; i >= 0; i--)
+    for (i = n - 1; i >= 0; i--)
     {
-        total=0;
-        for (j = i+1; j <= n-1; j++)
+        total = 0;
+        for (j = i + 1; j <= n - 1; j++)
         {
-            total+=arr[i][j]*x[j];
-
+            total += arr[i][j] * x[j];
         }
-        x[i]=(arr[i][n]-total)/arr[i][i];
+        x[i] = (arr[i][n] - total) / arr[i][i];
     }
 
     printf("Cevaplar \n\n");
 
     for (i = 0; i < n; i++)
     {
-        printf("x%d %f",i+1,x[i]);
+        printf("x%d %f", i + 1, x[i]);
         printf("\n");
     }
 }
