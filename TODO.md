@@ -7,7 +7,7 @@
 - [x] Regular Falsi Method
 - [x] Newton Rapshon Method
 - [x] Secant Method
-- [x] Inverse of a Matrix
+- [x] Inverse of a Matrix (With Gauss Jordan)
 - [x] Gauss Elimination
 - [x] Gauss Siedal
 - [x] Numeric Derivative (Central,Forward,Backward)

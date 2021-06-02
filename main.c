@@ -18,6 +18,7 @@ float determinant(float arr[][25], int n);
 void cofactor(float arr[][25], int n);
 void transpose(float arr[][25], float cof[][25], int n);
 
+void gauss_jordan_method();
 void gauss_elimination_method();
 void gauss_siedal();
 
@@ -36,11 +37,13 @@ int main()
     //inverse_of_matrix();
 
     //gauss_elimination_method();
-    gauss_siedal();
+    //gauss_siedal();
 
     //numeric_derivative();
     //simpson();
     //trapez();
+
+    gauss_jordan_method();
 
     return 0;
 }
@@ -202,7 +205,6 @@ void gauss_siedal()
     
     */
 
-
     printf("Bilinmeyen Sayisini giriniz:");
     scanf("%d", &n);
     printf("\n");
@@ -250,13 +252,13 @@ void gauss_siedal()
             total = b[i];
             for (j = 0; j < n; j++)
             {
-                if (j != i){
+                if (j != i)
+                {
                     total -= arr[i][j] * x[j];
-                }                
+                }
             }
-            
-            xn[i]=total/arr[i][i];
 
+            xn[i] = total / arr[i][i];
         }
         c = 0; // indicates |x[i]-xn[i]|<epp for all i
         for (i = 0; i < n; i++)
@@ -286,14 +288,13 @@ void gauss_siedal()
     }
 
     printf("\n");
-
 }
 
 void gauss_jordan_method() //find inverse of matrix
 {
     float arr[max][max] = {0};
     float x[max][max] = {0};
-    int n, i, j, k, row;
+    int n, i, j, k;
 
     printf("Bilinmeyen Sayisini giriniz:");
     scanf("%d", &n);
@@ -303,7 +304,7 @@ void gauss_jordan_method() //find inverse of matrix
     {
         for (j = 0; j < n; j++)
         {
-            printf("%d. Satir %d. Sutun Elemani Giriniz:", i, j);
+            printf("A[%d][%d]:", i, j);
             scanf("%f", &arr[i][j]);
             printf("\n");
 
@@ -313,20 +314,79 @@ void gauss_jordan_method() //find inverse of matrix
             }
         }
     }
+    float ratio;
+
+    for (i = n - 1; i > 0; i--)
+    {
+
+        // Swapping each and every element of the two rows
+        if (arr[i - 1][0] < arr[i][0])
+        {
+            for (j = 0; j < n; j++)
+            {
+                ratio = arr[i][j];
+                arr[i][j] = arr[i - 1][j];
+                arr[i - 1][j] = ratio;
+
+                ratio = x[i][j];
+                x[i][j] = x[i - 1][j];
+                x[i - 1][j] = ratio;
+            }
+        }
+    }
 
     //
     for (i = 0; i < n; i++)
     {
-        float ratio = arr[i][i];
+
         for (j = 0; j < n; j++)
         {
-            /* code */
+            if (i != j)
+            {
+
+                ratio = arr[j][i] / arr[i][i];
+                for (k = 0; k < n; k++)
+                {
+                    arr[j][k] -= arr[i][k] * ratio;
+                    x[j][k] -= x[i][k] * ratio;
+                }
+            }
+        }
+    }
+
+    //
+    for (i = 0; i < n; i++)
+    {
+        ratio = arr[i][i];
+        for (j = 0; j < n; j++)
+        {
+
             arr[i][j] /= ratio;
             x[i][j] /= ratio;
         }
     }
 
     //
+    printf("\nArray\n");
+    for (i = 0; i < n; i++)
+    {
+        for (j = 0; j < n; j++)
+        {
+            printf("%f ", arr[i][j]);
+        }
+        printf("\n");
+    }
+
+    printf("\nInverse of Array\n");
+
+    for (i = 0; i < n; i++)
+    {
+        for (j = 0; j < n; j++)
+        {
+            printf("%f ", x[i][j]);
+        }
+        printf("\n");
+    }
 }
 
 void gauss_elimination_method()
