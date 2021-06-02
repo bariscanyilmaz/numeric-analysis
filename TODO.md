@@ -8,7 +8,7 @@
 - [x] Newton Rapshon Method
 - [x] Secant Method
 - [x] Inverse of a Matrix
-- [-] Gauss Elimination
+- [x] Gauss Elimination
 - [ ] Gauss Siedal
 - [x] Numeric Derivative (Central,Forward,Backward)
 - [x] Simpson
