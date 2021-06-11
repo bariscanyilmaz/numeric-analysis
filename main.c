@@ -5,8 +5,10 @@
 
 #define MAX 100
 
-float calculate_equevelent(float x, int n, float arr[]);
+void gregory_newton();
 
+float calculate_equevelent(float x, int n, float arr[]);
+float fac(int i);
 void graph_method();
 void bisection_method();
 void regular_falsi_method();
@@ -43,10 +45,101 @@ int main()
     //simpson();
     //trapez();
 
-    gauss_jordan_method();
+    //gauss_jordan_method();
+    gregory_newton();
 
     return 0;
 }
+
+void gregory_newton()
+{
+
+    float arr[max][max], x[max], y[max], temp = 1;
+    int all_is_equal = 1;
+    int cycle = 0, i, j;
+    float h, n, input, result = 0;
+
+    ///
+    printf("Ornek sayisi icin N degerini giriniz:");
+    scanf("%f", &n);
+    printf("\n");
+
+    for (i = 0; i < n; i++)
+    {
+        printf("%d. X degerini giriniz:", i + 1);
+        scanf("%f", &x[i]);
+        printf("\n");
+        printf("%d. degerin Y  degerini giriniz:", i + 1);
+        scanf("%f", &y[i]);
+        printf("\n\n");
+    }
+
+    printf("Hesaplanacak degeri giriniz:");
+    scanf("%f",&input);
+
+    h = x[1] - x[0];
+
+    //differları bul
+    for (i = 1; i < n; i++)
+    {
+        arr[i-1][0] = y[i] - y[i - 1];
+    }
+
+
+    do
+    {
+        for (i = 1; i < n; i++)
+        {
+            all_is_equal = true;
+            for (j = 1; j < n-i; j++)
+            {
+
+                if (arr[j][i-1] != arr[j-1][i-1])
+                    all_is_equal = false;
+
+                arr[j-1][i] = arr[j][i-1] - arr[j-1][i-1];
+            }
+
+            cycle++;
+        }
+
+    } while (!all_is_equal);
+
+
+    //
+    //f0+(xi-x0*delta[0])/h+(xi-x0)*(xi-x1)*delta[1]/(h^2*2!)+
+    //xi=x;
+    result += y[0];
+    i = 1;
+
+    while (i <= cycle)
+    {
+        temp=1;
+        for (j = 0; j < i; j++)
+        {
+            temp*=(input-x[j]);
+        }
+
+        temp/=pow(h,i);
+        temp/=fac(i);
+        temp*=arr[0][i-1];
+        i++;
+
+        result+=temp;
+    }
+
+    printf("X:%f icin sonuc:%f",input,result);
+
+    //
+}
+
+float fac(int i){
+    float tmp=1;
+    while (i>1) tmp*=i--;
+
+    return tmp;
+}
+
 void trapez()
 {
     int n, i, steps;

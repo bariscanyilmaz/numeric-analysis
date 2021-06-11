@@ -13,4 +13,4 @@
 - [x] Numeric Derivative (Central,Forward,Backward)
 - [x] Simpson
 - [x] Trapez
-- [ ] Gregory Newton Enterpolation without transition of variables
+- [x] Gregory Newton Enterpolation without transition of variables
