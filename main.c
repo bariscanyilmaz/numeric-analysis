@@ -30,23 +30,71 @@ void trapez();
 
 int main()
 {
+    int code = 1;
 
-    //graph_method();
-    //bisection_method();
-    //regular_falsi_method();
-    //newton_raphson_method();
-    //secant_method();
-    //inverse_of_matrix();
+    printf("(1) Bisection \n");
+    printf("(2) Regula-Falsi \n");
+    printf("(3) Newton-Rapshon \n");
+    printf("(4) NxN Matris Tersi \n");
+    printf("(5) Gauss Elimination \n");
+    printf("(6) Gauss Seidal \n");
+    printf("(7) Sayisal Turev \n");
+    printf("(8) Simpson \n");
+    printf("(9) Trapez \n");
+    printf("(10) Gregory Newton Enterpolasyonu \n");
+    printf("Bir yontem seciniz \n");
+    scanf("%d", &code);
 
-    //gauss_elimination_method();
-    //gauss_siedal();
-
-    //numeric_derivative();
-    //simpson();
-    //trapez();
-
-    //gauss_jordan_method();
-    gregory_newton();
+    if (code == 1)
+    {
+        printf(" Bisection \n\n");
+        bisection_method();
+    }
+    else if (code == 2)
+    {
+        printf("Regula-Falsi \n\n");
+        regular_falsi_method();
+    }
+    else if (code == 3)
+    {
+        printf("Newton-Rapshon \n\n");
+        newton_raphson_method();
+    }
+    else if (code == 4)
+    {
+        printf("NxN Matris Tersi \n\n");
+        inverse_of_matrix();
+    }
+    else if (code == 5)
+    {
+        printf("Gauss Elimination \n\n");
+        gauss_elimination_method();
+    }
+    else if (code == 6)
+    {
+        printf("Gauss Seidal \n\n");
+        gauss_siedal();
+    }
+    else if (code == 7)
+    {
+        printf("Sayisal Turev \n\n");
+        numeric_derivative();
+    }
+    else if (code == 8)
+    {
+        printf("Simpson \n\n");
+        simpson();
+    }
+    else if (code == 9)
+    {
+        printf("Trapez \n\n");
+        trapez();
+    }
+    else if (code == 10)
+    {
+        printf("Gregory Newton Enterpolasyonu \n\n");
+        gregory_newton();
+    }
 
     return 0;
 }
@@ -75,67 +123,58 @@ void gregory_newton()
     }
 
     printf("Hesaplanacak degeri giriniz:");
-    scanf("%f",&input);
+    scanf("%f", &input);
 
     h = x[1] - x[0];
 
-    //differları bul
     for (i = 1; i < n; i++)
     {
-        arr[i-1][0] = y[i] - y[i - 1];
+        arr[i - 1][0] = y[i] - y[i - 1];
     }
 
-
-    do
+    for (i = 1; i < n; i++)
     {
-        for (i = 1; i < n; i++)
+        all_is_equal = true;
+        for (j = 1; j < n - i; j++)
         {
-            all_is_equal = true;
-            for (j = 1; j < n-i; j++)
-            {
 
-                if (arr[j][i-1] != arr[j-1][i-1])
-                    all_is_equal = false;
+            if (arr[j][i - 1] != arr[j - 1][i - 1])
 
-                arr[j-1][i] = arr[j][i-1] - arr[j-1][i-1];
-            }
-
-            cycle++;
+                arr[j - 1][i] = arr[j][i - 1] - arr[j - 1][i - 1];
         }
 
-    } while (!all_is_equal);
+        cycle++;
+    }
 
-
-    //
-    //f0+(xi-x0*delta[0])/h+(xi-x0)*(xi-x1)*delta[1]/(h^2*2!)+
-    //xi=x;
+  
     result += y[0];
     i = 1;
 
     while (i <= cycle)
     {
-        temp=1;
+        temp = 1;
         for (j = 0; j < i; j++)
         {
-            temp*=(input-x[j]);
+            temp *= (input - x[j]);
         }
 
-        temp/=pow(h,i);
-        temp/=fac(i);
-        temp*=arr[0][i-1];
+        temp /= pow(h, i);
+        temp /= fac(i);
+        temp *= arr[0][i - 1];
         i++;
 
-        result+=temp;
+        result += temp;
     }
 
-    printf("X:%f icin sonuc:%f",input,result);
+    printf("X:%f icin sonuc:%f", input, result);
 
-    //
 }
 
-float fac(int i){
-    float tmp=1;
-    while (i>1) tmp*=i--;
+float fac(int i)
+{
+    float tmp = 1;
+    while (i > 1)
+        tmp *= i--;
 
     return tmp;
 }
@@ -217,6 +256,7 @@ void numeric_derivative()
     printf("Ileri Fark:%f", ileri);
     printf("\n");
     printf("Geri Fark:%f", geri);
+    printf("\n");
 }
 
 float integral(float x, int n, float arr[])
@@ -289,16 +329,7 @@ void gauss_siedal()
     float x[max] = {0}, b[max] = {0}, xn[max] = {0}, c = 0, total = 0, epsilon = 0, init = 0, tmp = 0, error = 0;
     int n, i, j, k, row;
 
-    /*
-
-    _ _ _
-    _ _ _
-    _ _ _
-    
-    
-    */
-
-    printf("Bilinmeyen Sayisini giriniz:");
+    printf("Denklem Sayisini giriniz:");
     scanf("%d", &n);
     printf("\n");
 
@@ -353,7 +384,7 @@ void gauss_siedal()
 
             xn[i] = total / arr[i][i];
         }
-        c = 0; // indicates |x[i]-xn[i]|<epp for all i
+        c = 0; 
         for (i = 0; i < n; i++)
         {
             error = fabs(x[i] - xn[i]);
@@ -383,13 +414,13 @@ void gauss_siedal()
     printf("\n");
 }
 
-void gauss_jordan_method() //find inverse of matrix
+void gauss_jordan_method() 
 {
     float arr[max][max] = {0};
     float x[max][max] = {0};
     int n, i, j, k;
 
-    printf("Bilinmeyen Sayisini giriniz:");
+    printf("NxN matrisin icin N degerini giriniz:");
     scanf("%d", &n);
     printf("\n");
 
@@ -412,7 +443,6 @@ void gauss_jordan_method() //find inverse of matrix
     for (i = n - 1; i > 0; i--)
     {
 
-        // Swapping each and every element of the two rows
         if (arr[i - 1][0] < arr[i][0])
         {
             for (j = 0; j < n; j++)
@@ -460,7 +490,7 @@ void gauss_jordan_method() //find inverse of matrix
     }
 
     //
-    printf("\nArray\n");
+    printf("\nMatris\n");
     for (i = 0; i < n; i++)
     {
         for (j = 0; j < n; j++)
@@ -470,7 +500,7 @@ void gauss_jordan_method() //find inverse of matrix
         printf("\n");
     }
 
-    printf("\nInverse of Array\n");
+    printf("\nMatrisin Tersi \n");
 
     for (i = 0; i < n; i++)
     {
@@ -488,7 +518,7 @@ void gauss_elimination_method()
     float x[max] = {0}, c = 0, total = 0;
     int n, i, j, k, row;
 
-    printf("Bilinmeyen Sayisini giriniz:");
+    printf("Denklem sayisini giriniz:");
     scanf("%d", &n);
     printf("\n");
 
@@ -550,34 +580,10 @@ void gauss_elimination_method()
 
 void inverse_of_matrix()
 {
-    float arr[25][25];
-    int size, i, j;
 
-    printf("N x N matrisin boyutunu giriniz:");
-    scanf("%d", &size);
+    gauss_jordan_method();
 
-    for (i = 0; i < size; i++)
-    {
-        for (j = 0; j < size; j++)
-        {
-            printf("%d .satir %d .sutun elemanı giriniz :", i, j);
-            scanf("%f", &arr[i][j]);
-            printf("\n");
-        }
-    }
-
-    float d = determinant(arr, size);
-
-    if (d == 0)
-    {
-        printf("Matrisin tersi bulunmamaktadır.");
-    }
-    else
-    {
-        cofactor(arr, size);
-
-        //
-    }
+    
 }
 void cofactor(float arr[][25], int k)
 {
@@ -759,7 +765,8 @@ void bisection_method()
                 printf("\n");
                 printf("Kok 2:%f", b);
                 printf("\n");
-                printf("Root c %f", c);
+                printf("Kok c %f", c);
+                printf("\n");
             }
             else if (res * result < 0)
             {
@@ -780,6 +787,7 @@ void bisection_method()
     if (!is_root_exist)
     {
         printf("Belirtilen aralikta kok bulunmamaktadır.");
+        printf("\n");
     }
 }
 
@@ -833,7 +841,7 @@ void regular_falsi_method()
                 printf("\n");
                 printf("Kok 2:%f", b);
                 printf("\n");
-                printf("Root c %f", c);
+                printf("Kok c %f", c);
                 printf("\n");
             }
             else if (res * result < 0)
@@ -898,9 +906,9 @@ void graph_method()
             {
                 is_finish = true;
 
-                printf("Root find\n");
-                printf("Root 1 %f:\n", x);
-                printf("Root 2 %f:\n", x + delta);
+                
+                printf("Kok 1 %f:\n", x);
+                printf("Kok 2 %f:\n", x + delta);
             }
             else
             {
@@ -961,14 +969,15 @@ void newton_raphson_method()
         if (is_real_root && fabs(real_root - c) < epsilon)
         {
             is_finish = true;
-            printf("\nGercek Root:%f", real_root);
-            printf("\nRoot:%f", c);
+            printf("\nGercek Kok:%f", real_root);
+            printf("\nKok:%f", c);
         }
         else if (!is_real_root && fabs(b - a) < epsilon)
         {
             is_finish = true;
-            printf("\n Root 0:%f", a);
-            printf("\n Root 1:%f", b);
+            printf("\n Kok 0:%f", a);
+            printf("\n Kok 1:%f", b);
+            printf("\n");
         }
         else
         {
@@ -1021,15 +1030,15 @@ void secant_method()
         if (is_real_root && fabs(real_root - c) < epsilon)
         {
             is_finish = true;
-            printf("\nGercek Root:%f", real_root);
-            printf("\nRoot:%f", c);
+            printf("\nGercek Kok:%f", real_root);
+            printf("\nKok:%f", c);
         }
         else if (!is_real_root && fabs(c - b) < epsilon)
         {
             is_finish = true;
-            printf("\n Root 0:%f", a);
-            printf("\n Root 1:%f", b);
-            printf("\n Root :%f", c);
+            printf("\n Kok 0:%f", a);
+            printf("\n Kok 1:%f", b);
+            printf("\n Kok :%f", c);
         }
         else
         {
@@ -1039,5 +1048,5 @@ void secant_method()
 
     } while (!is_finish);
 
-    printf("Exit from secant");
+    printf("Kirisden cik");
 }
